@@ -1,0 +1,8 @@
+# Ignore Python virtual environment files
+backend/codegen
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+#ignore the api keys .env file
+backend/.env
