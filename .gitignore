@@ -6,6 +6,7 @@ backend/codegen
 
 #ignore the api keys .env file
 backend/.env
+backend/credentials.json
 
 # dependencies
 frontend/node_modules
