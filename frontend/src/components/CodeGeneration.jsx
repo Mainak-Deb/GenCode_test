@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import Markdown from 'react-markdown'
+import { CodeBlock } from "react-code-blocks";
+import myCustomTheme from './theme';
 
 const CodeGeneration = ({paltformname}) => {
   const [language, setLanguage] = useState('');
@@ -99,12 +101,24 @@ const CodeGeneration = ({paltformname}) => {
             Submit
           </button>
         </form>
-        <div className='bg-white w-[90%] m-auto my-4 overflow-scroll'>
-          <Markdown>{content}</Markdown>
-        </div>
+
       </div>
+      <div className="w-[90%] m-4 p-2 text-left">
+          <CodeBlock
+              text={content}
+              language="python"
+              showLineNumbers={true}
+              theme={myCustomTheme}
+              startingLineNumber={1}
+              codeBlock={{  wrapLines: true }}
+        />
+      </div>
+      
+      {/* <div className='bg-black text-white w-[90%] m-auto my-4 overflow-scroll text-left p-2'>
+          <Markdown>{content}</Markdown>
+      </div> */}
     </div>
   )
 }
 
-export default CodeGeneration
+export default CodeGeneration;

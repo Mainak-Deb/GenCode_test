@@ -67,5 +67,28 @@ def codequery():
             "content":content
         })
 
+@app.route('/testcasegen', methods=['POST'])
+def testcase_gen():
+    if request.method == 'POST':
+        # Get POST parameters from the request
+        data = request.get_json()
+        language=data['language']
+        functionBody=data['functionBody']
+        description=data['description']
+
+        table=vertexai_platform.generate_table(GCLOUD_SERVICE_CREDENTIAL,functionBody,description)
+        testing_code=vertexai_platform.generate_test_code(GCLOUD_SERVICE_CREDENTIAL,functionBody,table,language)
+
+        print(testing_code)
+        
+        return jsonify({
+            "status":200,
+            "table":table,
+            "testing_code":testing_code
+        })
+
+
+
+
 if __name__ == '__main__':
     app.run(port=8080,debug=True)

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import Markdown from 'react-markdown'
+import Markdown from 'react-markdown';
+import CodeEditor from '@uiw/react-textarea-code-editor';
 
 const CodeQuestion = ({ paltformname }) => {
+    const [language, setLanguage] = useState('');
     const [code, setCode] = useState('');
     const [query, setQuery] = useState('');
     const [content, setContent] = useState('# *Interra Ai:* code will be shown here!')
@@ -37,17 +39,52 @@ const CodeQuestion = ({ paltformname }) => {
       <div className="max-w-md mx-auto mt-8 p-6 border rounded-md shadow-md">
         <h2 className="text-xl font-semibold mb-4">Query from code</h2>
         <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+            <label htmlFor="language" className="block text-sm font-medium mb-1">
+              Select Language
+            </label>
+            <select
+              id="language"
+              className="w-full border rounded-md p-2"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            >
+                  <option value="">Select a language</option>
+                  <option value="Python">Python</option>
+                  <option value="JavaScript">JavaScript</option>
+                  <option value="Java">Java</option>
+                  <option value="C++">C++</option>
+                  <option value="C#">C#</option>
+                  <option value="Ruby">Ruby</option>
+                  <option value="PHP">PHP</option>
+                  <option value="Swift">Swift</option>
+                  <option value="Kotlin">Kotlin</option>
+                  <option value="TypeScript">TypeScript</option>
+                  <option value="Go">Go</option>
+                  <option value="Rust">Rust</option>
+                  <option value="Perl">Perl</option>
+                  <option value="C">C</option>
+                  <option value="Assembly">Assembly</option>
+                  <option value="Solidity">Solidity</option>
+            </select>
+          </div>
           <div className="mb-4">
             <label htmlFor="code" className="block text-sm font-medium mb-1">
               Code
             </label>
-            <textarea
-              id="code"
-              className="w-full border rounded-md p-2"
-              rows="6"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            ></textarea>
+              <CodeEditor
+                value={code}
+                language={language}
+                placeholder="Enter your code Here"
+                onChange={(evn) => setCode(evn.target.value)}
+                padding={15}
+                data-color-mode="dark"
+                style={{
+                  backgroundColor: "#161A30",
+                  borderRadius:"10px",
+                  fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                }}
+              />
           </div>
           <div className="mb-4">
             <label htmlFor="query" className="block text-sm font-medium mb-1">
