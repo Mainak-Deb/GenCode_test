@@ -62,6 +62,7 @@ def generate_test_code(credentials,functionbody:str,table:dict,language:str):
 
 
 def parse_input(input_text):
+    print(input_text)
     lines = input_text.strip().split('\n')
     #reconstructing header
     header = lines[0].strip()[1:-1].split('|')

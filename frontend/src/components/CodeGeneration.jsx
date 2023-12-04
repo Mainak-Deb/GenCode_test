@@ -9,6 +9,7 @@ const CodeGeneration = ({paltformname}) => {
   const [functionName, setFunctionName] = useState('');
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('# *Interra Ai:* code will be shown here!')
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +21,7 @@ const CodeGeneration = ({paltformname}) => {
         description,
         paltformname
       };
+      setLoading(true);
       console.log(formData)
 
       const response = await axios.post('http://127.0.0.1:8080/codegen', formData);
@@ -27,6 +29,7 @@ const CodeGeneration = ({paltformname}) => {
       setContent(removeFirstAndLastLine(response.data.content))
 
       console.log(response.data.content);
+      setLoading(false);
 
     } catch (error) {
       console.error('Error:', error);
@@ -129,7 +132,15 @@ const CodeGeneration = ({paltformname}) => {
         </form>
 
       </div>
-      <div className="w-[90%] m-4 p-2 text-left flex flex-col justify-center">
+
+      {loading && (
+        <div className="flex justify-center items-center h-[200px]">
+          {/* Loader or spinner component */}
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+        </div>
+      )}
+      {!loading && (
+      <div className="w-[90%] m-auto my-4 p-2 text-left flex flex-col justify-center bg-black">
           <CodeBlock
               text={content}
               language={language}
@@ -138,8 +149,9 @@ const CodeGeneration = ({paltformname}) => {
               startingLineNumber={1}
               codeBlock={{  wrapLines: true }}
         />
-         <button className='w-[50%]  m-auto p-2  my-2 bg-black text-white rounded-md'  onClick={handleCopyClick}>Copy to Clipboard</button>
+         <button className='w-[50%]  m-auto p-2  my-2 bg-gray-700 text-white rounded-md'  onClick={handleCopyClick}>Copy to Clipboard</button>
       </div>
+      )}
       
       {/* <div className='bg-black text-white w-[90%] m-auto my-4 overflow-scroll text-left p-2'>
           <Markdown>{content}</Markdown>
