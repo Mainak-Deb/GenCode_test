@@ -24,20 +24,46 @@ const CodeGeneration = ({paltformname}) => {
 
       const response = await axios.post('http://127.0.0.1:8080/codegen', formData);
       console.log('Response:', response.data);
-      setContent(response.data.content)
+      setContent(removeFirstAndLastLine(response.data.content))
 
-      console.log(response.data.content)
-     
-      setLanguage('');
-      setFunctionName('');
-      setDescription('');
+      console.log(response.data.content);
+
     } catch (error) {
       console.error('Error:', error);
     }
   };
+
+  function removeFirstAndLastLine(str) {
+    let regex = /```([^`]*)```/;
+    let match = regex.exec(str);
+    let result=null;
+    if (match !== null) {
+      console.log("Found:", match[1]); // match[1] contains the content within ```
+      // Split the string by lines
+      let lines = str.split('\n');
+      // Remove the first and last lines
+      lines = lines.slice(1, -1);
+      // Join the remaining lines back together
+      result = lines.join('\n');
+    } else {
+      result = str;
+    }
+    return result;
+  }
+
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(content)
+      .then(() => {
+        alert('Copied to clipboard!');
+      })
+      .catch((error) => {
+        console.error('Failed to copy:', error);
+      });
+  };
+
   return (
     <div>
-      <div className="max-w-md mx-auto mt-8 p-6 border rounded-md shadow-md">
+      <div className="max-w-md mx-auto mt-8 p-6 border rounded-md shadow-md  bg-slate-400">
         <h2 className="text-xl font-semibold mb-4">Programming Form</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -103,15 +129,16 @@ const CodeGeneration = ({paltformname}) => {
         </form>
 
       </div>
-      <div className="w-[90%] m-4 p-2 text-left">
+      <div className="w-[90%] m-4 p-2 text-left flex flex-col justify-center">
           <CodeBlock
               text={content}
-              language="python"
+              language={language}
               showLineNumbers={true}
               theme={myCustomTheme}
               startingLineNumber={1}
               codeBlock={{  wrapLines: true }}
         />
+         <button className='w-[50%]  m-auto p-2  my-2 bg-black text-white rounded-md'  onClick={handleCopyClick}>Copy to Clipboard</button>
       </div>
       
       {/* <div className='bg-black text-white w-[90%] m-auto my-4 overflow-scroll text-left p-2'>

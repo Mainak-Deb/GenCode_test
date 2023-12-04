@@ -56,7 +56,7 @@ const Home = () => {
           </select>
       </div>
 
-      <div className="w-[90%] m-auto my-4 bg-gray-300 p-2 rounded-lg">
+      <div className="w-[90%] m-auto my-4 p-2 rounded-lg bg-cyan-700 bg-opacity-50">
         
       {workfunction === 'Code_Generation' && <CodeGeneration paltformname={selectedPlatform}/>}
       {workfunction === 'Testcase_Generation' && <TestCaseGen paltformname={selectedPlatform}/>}

@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import Markdown from 'react-markdown';
 import CodeEditor from '@uiw/react-textarea-code-editor';
+import { CodeBlock } from "react-code-blocks";
+import myCustomTheme from './theme';
 
 const TestCaseGen = ({paltformname}) => {
   const [functionBody, setfunctionBody] = useState('');
   const [language, setLanguage] = useState('');
   const [description, setDescription] = useState('');
-  const [content, setContent] = useState('# *Interra Ai:* code will be shown here!')
-
+  const [testcode, setTestcode] = useState('# *Interra Ai:* code will be shown here!')
+  const [headers,setHeaders]=useState(null);
+  const [body,setbody]=useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -26,6 +29,17 @@ const TestCaseGen = ({paltformname}) => {
       console.error('Error:', error);
     }
   };
+
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(testcode)
+      .then(() => {
+        alert('Copied to clipboard!');
+      })
+      .catch((error) => {
+        console.error('Failed to copy:', error);
+      });
+  };
+
   return (
     <div>
       <div className="w-[90%] mx-auto mt-8 p-6 border rounded-md shadow-md">
@@ -103,9 +117,36 @@ const TestCaseGen = ({paltformname}) => {
         </form>
 
       </div>
-      <div className="w-[90%] m-4 p-2"></div>
+      <div className="w-[90%] m-4 p-2">
+      <table>
+      <thead>
+        <tr>
+          {headers!=null && headers.map(header => (
+            <th key={header}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {body!=null && body.map(row => (
+          <tr key={row[headers[0]]}>
+            {headers.map(header => (
+              <td key={`${row[headers[0]]}-${header}`}>{row[header]}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+      </div>
       <div className='bg-black text-white w-[90%] m-auto my-4 overflow-scroll text-left p-2'>
-          <Markdown>{content}</Markdown>
+      <CodeBlock
+              text={testcode}
+              language={language}
+              showLineNumbers={true}
+              theme={myCustomTheme}
+              startingLineNumber={1}
+              codeBlock={{  wrapLines: true }}
+        />
+         <button className='w-[50%]  m-auto p-2  my-2 bg-black text-white rounded-md'  onClick={handleCopyClick}>Copy to Clipboard</button>
       </div>
     </div>
     )
