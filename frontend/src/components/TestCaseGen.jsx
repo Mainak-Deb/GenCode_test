@@ -5,6 +5,8 @@ import CodeEditor from '@uiw/react-textarea-code-editor';
 import { CodeBlock } from "react-code-blocks";
 import myCustomTheme from './theme';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { CSVLink, CSVDownload } from "react-csv";
+
 
 const TestCaseGen = ({ paltformname }) => {
   const [functionBody, setfunctionBody] = useState('');
@@ -164,13 +166,24 @@ const TestCaseGen = ({ paltformname }) => {
           <button className='w-[50%]  m-auto p-2  my-2 bg-gray-700 text-white rounded-md' onClick={handleCopyClick}>Copy to Clipboard</button>
         </div>
         <div className="w-[90%] m-auto my-4 p-2 flex flex-col  justify-center align-middle overflow-x-auto">
-          <DownloadTableExcel
+          {/* <DownloadTableExcel
             filename="testcases"
             sheet="users"
             currentTableRef={tableRef.current}
           >
             <button className="py-2 px-4 bg-orange-600 text-white"> Export excel </button>
-          </DownloadTableExcel>
+          </DownloadTableExcel> */}
+           {body != null && 
+           <CSVLink data={body} style={{
+              backgroundColor: "darkorange",
+              color:"white",
+              width:"200px",
+              padding:"4px 8px 4px 8px",
+              borderRadius: "10px",
+           }}  >
+            Download CSV file
+            </CSVLink>};
+          
           <table ref={tableRef} className="m-2 bg-amber-100 min-w-full border-collapse border border-gray-300">
             <thead className="bg-black text-white p-2 ">
               <tr className="px-4 border-double border-white">

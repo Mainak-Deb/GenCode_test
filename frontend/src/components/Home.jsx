@@ -21,8 +21,8 @@ const Home = () => {
 
   return (
     <div>
-      <h1  className='text-4xl m-4 border-4 text-white bg-black border-blue-400 rounded-lg'>INTERRA AI</h1>
-      <div className='w-[80vw] m-[10vw] bg-gray-300 rounded-lg p-2 mt-4 mb-0 flex flex-col  justify-around'>
+      <h1  className='text-4xl m-4 border-4 text-white bg-black border-blue-400 rounded-lg flex flex-row'>INTERRA AI</h1>
+      <div className='w-[20vw] m-[10vw] bg-gray-300 rounded-lg p-2 mt-4 mb-0 flex flex-col  justify-around'>
       <label htmlFor="platformSelect">Choose platform:</label>
       <div className='w-[90%] m-auto border bordder-black rounded-lg p-2 mb-4 mt-0 flex flex-row font-bold justify-center'>
           {selectedPlatform}
@@ -39,7 +39,7 @@ const Home = () => {
           
       </div>
       
-      <div className='w-[80vw] m-[10vw] bg-blue-200 rounded-lg p-2 mt-4 mb-0 flex flex-col  justify-around'>
+      <div className='w-[50vw] m-[10vw] bg-blue-200 rounded-lg p-2 mt-4 mb-0 flex flex-col  justify-around'>
       <label className='p-2'  htmlFor="platformSelect">Choose Function</label>
         
           <select
