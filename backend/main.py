@@ -79,6 +79,7 @@ def testcase_gen():
         table=vertexai_platform.generate_table(GCLOUD_SERVICE_CREDENTIAL,functionBody,description)
         testing_code=vertexai_platform.generate_test_code(GCLOUD_SERVICE_CREDENTIAL,functionBody,table,language)
 
+        print(table)
         print(testing_code)
         
         return jsonify({
@@ -87,8 +88,21 @@ def testcase_gen():
             "testing_code":testing_code
         })
 
+@app.route('/codecompletion', methods=['POST'])
+def code_completion():
+    if request.method == 'POST':
+        # Get POST parameters from the request
+        data = request.get_json()
+        print(data,type(data),dir(data))
+        prefix=str(data['prefix'])
+        suffix=str(data['suffix'])
 
-
+        content=vertexai_platform.complete_code_function(prefix,suffix)
+        
+        return jsonify({
+            "status":200,
+            "content":content,
+        })
 
 if __name__ == '__main__':
     app.run(port=8080,debug=True)

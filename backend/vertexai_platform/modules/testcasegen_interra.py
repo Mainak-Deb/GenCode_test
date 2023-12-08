@@ -48,7 +48,7 @@ def generate_test_code(credentials,functionbody:str,table:dict,language:str):
     model = CodeGenerationModel.from_pretrained("code-bison")
     prompt=f"""{functionbody}\ngenerate a code in {language} language  which can unit
     test this function after taking  data 
-    from a excel sheet named test_[FUNCTION_NAME].xlxs , 
+    from a csv file named testcases.csv , 
     containg following columns with name {columns}
     code can use any external libray or modules , or can generate from scrach"""
 
