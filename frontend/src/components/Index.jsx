@@ -6,25 +6,22 @@ import { CodeBlock } from "react-code-blocks";
 
 const Index = () => {
 
-    const testcode=`import hashlib
+    const testcode=`
+    import hashlib
 
-                    def hash_file(filename):
-                    """"This function returns the SHA-1 hash
-                    of the file passed into it"""  
-                    # make a hash object
-                    h = hashlib.sha1()
-                    # open file for reading in binary mode
-                    with open(filename,'rb') as file:
-                        # loop till the end of the file
-                        chunk = 0
-                        while chunk != b'':
-                            # read only 1024 bytes at a time
-                            chunk = file.read(1024)
-                            h.update(chunk)
-                    # return the hex representation of digest
-                    return h.hexdigest()
-                    message = hash_file("track1.mp3")
-                    print(message)`
+    def hash_file(filename):
+    """"This function returns the SHA-1 hash
+    of the file passed into it"""  
+        h = hashlib.sha1()
+        with open(filename,'rb') as file:
+            chunk = 0
+            while chunk != b'':
+                chunk = file.read(1024)
+                h.update(chunk)
+        return h.hexdigest()
+        message = hash_file("track1.mp3")
+        print( message)`
+       
     const language="python"
 
 
@@ -37,13 +34,13 @@ const Index = () => {
                 <span>InterraBot</span>   <span className='mx-2 font-extrabold  text-pink-700 text-7xl'>X</span>
             </div>
 
-            <div className='flex flex-row px-32 py-16'>
-                <div className='w-[50%] text-8xl p-4 px-4 text-slate-300 font-serif  text-right b' >
+            <div className='flex flex-row px-32 py-16 '>
+                <div className='w-[50%] text-8xl pt-16 px-4 text-slate-300 font-serif  text-right flex flex-col justify-center' >
                     <span className="text-6xl opacity-60 hover:opacity-80  ">Your Personal<br /> </span>
                     <span className='text-gradient bg-gradient-to-r from-blue-500 to-green-500' >
                         AI Coding 
                     </span>
-                    <br /> 
+
                     <span className='text-gradient bg-gradient-to-r from-blue-500 to-green-500' >Assistant</span> <br />
                 </div>
                 <div className='w-[50%] p-4 px-4 border border-white rounded-lg bg-blue-200 bg-opacity-60 pt-4 text-left opacity-60'> 

@@ -3,9 +3,14 @@ import axios from 'axios';
 import Markdown from 'react-markdown'
 import { CodeBlock } from "react-code-blocks";
 import myCustomTheme from './theme';
+import GlowButton from './common/GlowButton';
+import SciFiDiv from './common/SciFiDiv';
+import CustomInputField from './common/CustomInputField';
+import CustomTextAreaField from './common/CustomTeatAreaField';
 
-const CodeGeneration = ({paltformname}) => {
-  const [language, setLanguage] = useState('');
+
+
+const CodeGeneration = ({paltformname,language}) => {
   const [functionName, setFunctionName] = useState('');
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('# *Interra Ai:* code will be shown here!')
@@ -66,43 +71,14 @@ const CodeGeneration = ({paltformname}) => {
 
   return (
     <div>
-      <div className="max-w-md mx-auto mt-8 p-6 border rounded-md shadow-md  bg-slate-400">
-        <h2 className="text-xl font-semibold mb-4">Programming Form</h2>
+      <SciFiDiv className="w-[90%] mx-auto mt-8 p-6 border rounded-md shadow-md ">
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="language" className="block text-sm font-medium mb-1">
-              Select Language
-            </label>
-            <select
-              id="language"
-              className="w-full border rounded-md p-2"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-            >
-                  <option value="">Select a language</option>
-                  <option value="Python">Python</option>
-                  <option value="JavaScript">JavaScript</option>
-                  <option value="Java">Java</option>
-                  <option value="C++">C++</option>
-                  <option value="C#">C#</option>
-                  <option value="Ruby">Ruby</option>
-                  <option value="PHP">PHP</option>
-                  <option value="Swift">Swift</option>
-                  <option value="Kotlin">Kotlin</option>
-                  <option value="TypeScript">TypeScript</option>
-                  <option value="Go">Go</option>
-                  <option value="Rust">Rust</option>
-                  <option value="Perl">Perl</option>
-                  <option value="C">C</option>
-                  <option value="Assembly">Assembly</option>
-                  <option value="Solidity">Solidity</option>
-            </select>
-          </div>
+
           <div className="mb-4">
             <label htmlFor="functionName" className="block text-sm font-medium mb-1">
               Write Function Name
             </label>
-            <input
+            <CustomInputField
               type="text"
               id="functionName"
               placeholder="Write function name"
@@ -115,23 +91,24 @@ const CodeGeneration = ({paltformname}) => {
             <label htmlFor="description" className="block text-sm font-medium mb-1">
               Description
             </label>
-            <textarea
+            <CustomTextAreaField
               id="description"
               className="w-full border rounded-md p-2"
               rows="4"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
+            ></CustomTextAreaField>
           </div>
-          <button
+          {/* <button
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
           >
             Submit
-          </button>
+          </button> */}
+          <GlowButton onClick={handleSubmit}  >Generate</GlowButton>
         </form>
 
-      </div>
+      </SciFiDiv>
 
       {loading && (
         <div className="flex justify-center items-center h-[200px]">
