@@ -7,6 +7,8 @@ import GlowButton from './common/GlowButton';
 import SciFiDiv from './common/SciFiDiv';
 import CustomInputField from './common/CustomInputField';
 import CustomTextAreaField from './common/CustomTeatAreaField';
+import RainbowButton from './common/RainbowButton';
+import CodeSection from './common/CodeSection';
 
 
 
@@ -75,7 +77,7 @@ const CodeGeneration = ({paltformname,language}) => {
         <form onSubmit={handleSubmit}>
 
           <div className="mb-4">
-            <label htmlFor="functionName" className="block text-sm font-medium mb-1">
+            <label htmlFor="functionName" className="block text-sm font-medium mb-1 font-orbitron text-white ">
               Write Function Name
             </label>
             <CustomInputField
@@ -88,7 +90,7 @@ const CodeGeneration = ({paltformname,language}) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="description" className="block text-sm font-medium mb-1">
+            <label htmlFor="description" className="block text-sm font-medium mb-1  font-orbitron text-white">
               Description
             </label>
             <CustomTextAreaField
@@ -117,17 +119,7 @@ const CodeGeneration = ({paltformname,language}) => {
         </div>
       )}
       {!loading && (
-      <div className="w-[90%] m-auto my-4 p-2 text-left flex flex-col justify-center bg-black">
-          <CodeBlock
-              text={content}
-              language={language}
-              showLineNumbers={true}
-              theme={myCustomTheme}
-              startingLineNumber={1}
-              codeBlock={{  wrapLines: true }}
-        />
-         <button className='w-[50%]  m-auto p-2  my-2 bg-gray-700 text-white rounded-md'  onClick={handleCopyClick}>Copy to Clipboard</button>
-      </div>
+      <CodeSection content={content} language={language} handleCopyClick={handleCopyClick}  ></CodeSection>
       )}
       
       {/* <div className='bg-black text-white w-[90%] m-auto my-4 overflow-scroll text-left p-2'>

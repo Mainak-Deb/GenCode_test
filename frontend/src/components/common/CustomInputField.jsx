@@ -3,11 +3,11 @@ import React from 'react'
 const CustomInputField = (props) => {
     return (
         <>
-            <span class={props.className+ " input opacity-80"}>
+            <span className={props.className+ " input opacity-80"}>
                 <input
                     type="text"
                     placeholder={props.placeholder}
-                    className="bg-black text-green-100 py-2 px-4 font-serif text-lg"
+                    className="bg-black text-green-100 py-2 px-4  text-lg"
                     value={props.value}
                     onChange={props.onChange}
                 />

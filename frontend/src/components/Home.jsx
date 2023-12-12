@@ -4,6 +4,8 @@ import CodeCompletion from './CodeCompletion';
 import CodeChat from './CodeChat';
 import TestCaseGen from './TestCaseGen';
 import CodeQuestion from './CodeQuestion';
+import GlitchText from './common/GlitchText';
+
 
 const Home = () => {
   const [selectedPlatform, setSelectedPlatform] = useState('Google');
@@ -22,8 +24,8 @@ const Home = () => {
 
   return (
     <div className=' bg-slate-900 w-screen h-screen p-0 m-0 top-0 overflow-hidden'  >
-      <div className='white-shadow w-[90%] h-[50px] m-auto pl-4 my-4 bg-slate-900 rounded-md bg-opacity-20 font-serif text-white flex justify-left items-center  text-4xl opacity-80 ' >
-        <span>InterraBot</span>   <span className='mx-2 font-extrabold  text-pink-700 text-5xl'>X</span>
+      <div className='white-shadow w-[90%] h-[50px] m-auto pl-4 my-4 bg-slate-900 rounded-md bg-opacity-20 font-serif text-white flex justify-left items-center  text-4xl opacity-80 glitch' >
+        <GlitchText className="text-3xl"  >InterraBot</GlitchText>   <GlitchText className='mx-2 font-extrabold  text-pink-700 text-5xl'>X</GlitchText>
       </div>
       <div className="main white-shadow w-[90%] m-auto glow h-[80%] rounded-md flex flex-row  justify-between items-center bg-slate-900">
         <div className="w-[20%] h-[90%] border-r border-gray-600 flex flex-col  justify-between items-center">
@@ -97,7 +99,7 @@ const Home = () => {
             {workfunction === 'Testcase_Generation' && <TestCaseGen paltformname={selectedPlatform} />}
             {workfunction === 'Code_Completion' && <CodeCompletion paltformname={selectedPlatform} />}
             {workfunction === 'Code_Chat' && <CodeChat paltformname={selectedPlatform} />}
-            {workfunction === 'Code_Question' && <CodeQuestion paltformname={selectedPlatform} />}
+            {workfunction === 'Code_Question' && <CodeQuestion paltformname={selectedPlatform}  language={language}  setLanguage={setLanguage}/>}
             {!(workfunction === 'Testcase_Generation' || workfunction === 'Code_Question' || workfunction === 'Code_Generation' || workfunction === 'Code_Completion' || workfunction === 'Code_Chat') && (
               <div>Component not found</div>
             )}

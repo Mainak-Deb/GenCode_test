@@ -3,7 +3,9 @@
 	src: url(https://assets.codepen.io/9632/RocherColorGX.woff2);
 }
 
-
+* {
+	font-family: 'Orbitron', sans-serif;
+}
 
 .text-gradient {
 	background-clip: text;
@@ -81,7 +83,7 @@ select option {
 }
 
 .dark-shadow {
-	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .white-shadow {
@@ -413,4 +415,81 @@ select option {
 
 .mint {
 	font-palette: --Mint;
+}
+
+.font-orbitron {
+	font-family: 'Orbitron', sans-serif;
+}
+
+.text-3d {
+	text-transform: uppercase;
+	text-shadow: 1px 1px 1px #919191,
+		0.51px 1.82px 1px #919191,
+		0.51px 1.53px 1px #919191,
+		0.51px 2.84px 1px #919191,
+		0.51px 2.51px #919191,
+		0.51px 3px 1px #919191,
+		0.51px 3.5px 1px #919191,
+		0.51px 4px 1px #919191,
+		0.51px 4.5px 1px #919191,
+		0.51px 5px 1px #919191,
+		1px 18px 6px rgba(16, 16, 16, 0.4),
+		1px 22px 10px rgba(16, 16, 16, 0.2),
+		1px 25px 35px rgba(16, 16, 16, 0.2),
+		1px 30px 60px rgba(16, 16, 16, 0.4);
+}
+
+
+.bn30 {
+	border: 5px;
+	cursor: pointer;
+	outline: none;
+	font-size: 16px;
+	-webkit-transform: translate(0);
+	transform: translate(0);
+	background-image: linear-gradient(45deg, #4568dc, #b06ab3);
+	padding: 0.7em 2em;
+	border-radius: 65px;
+	box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.438);
+	-webkit-transition: box-shadow 0.25s;
+	transition: box-shadow 0.25s;
+	color: white;
+}
+
+.bn30 .text {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-image: linear-gradient(45deg, #4568dc, #b06ab3);
+}
+
+.bn30:after {
+	content: "";
+	border-radius: 18px;
+	position: absolute;
+	margin: 4px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: -1;
+	background: #0e0e10;
+}
+
+.bn30:hover {
+	background-image: linear-gradient(-45deg, #4568dc, #b06ab3);
+	box-shadow: 0 12px 24px rgba(128, 128, 128, 0.1);
+}
+
+.bn30:hover .text {
+	background-image: linear-gradient(-45deg, #4568dc, #b06ab3);
+}
+
+.jetBrains-mono {
+	font-family: 'JetBrains Mono', monospace;
+}
+
+.dark-gradient {
+	background: rgb(42, 42, 42);
+	background: radial-gradient(circle, rgba(42, 42, 42, 1) 0%, rgba(29, 29, 29, 1) 54%, rgba(0, 0, 0, 1) 100%);
 }
