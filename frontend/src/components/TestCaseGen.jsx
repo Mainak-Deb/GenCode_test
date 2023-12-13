@@ -6,11 +6,16 @@ import { CodeBlock } from "react-code-blocks";
 import myCustomTheme from './theme';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { CSVLink, CSVDownload } from "react-csv";
+import GlowButton from './common/GlowButton';
+import SciFiDiv from './common/SciFiDiv';
+import CustomInputField from './common/CustomInputField';
+import CustomTextAreaField from './common/CustomTeatAreaField';
+import CodeSection from './common/CodeSection';
+import FileReaderComponent from './common/FileReaderComponent';
 
 
-const TestCaseGen = ({ paltformname }) => {
+const TestCaseGen = ({ paltformname,language,setLanguage }) => {
   const [functionBody, setfunctionBody] = useState('');
-  const [language, setLanguage] = useState('');
   const [description, setDescription] = useState('');
   const [testcode, setTestcode] = useState('# *Interra Ai:* code will be shown here!')
   const [headers, setHeaders] = useState(null);
@@ -73,6 +78,36 @@ const TestCaseGen = ({ paltformname }) => {
 
   return (
     <div>
+      <SciFiDiv className="w-[90%] mx-auto mt-8 p-6 border rounded-md shadow-md ">
+        <div className="mb-4">
+          <label htmlFor="description" className="block text-sm font-medium mb-1 font-orbitron text-white ">
+            Write the function for unit test
+          </label>
+          <CodeEditor
+            value={functionBody}
+            language={language}
+            placeholder="Enter your code Here"
+            onChange={(evn) => setfunctionBody(evn.target.value)}
+            padding={15}
+            data-color-mode="dark"
+            style={{
+              backgroundColor: "#161A30",
+              borderRadius: "10px",
+              minHeight: "200px",
+              fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+            }}
+          />
+        </div>
+        <div className="mb-4">
+            <FileReaderComponent setLanguage={setLanguage} setFileContent={setfunctionBody} ></FileReaderComponent>
+          </div>
+      </SciFiDiv>
+    </div>
+  )
+
+
+  return (
+    <div>
       <div className="w-[90%] mx-auto mt-8 p-6 border rounded-md shadow-md">
         <h2 className="text-xl font-semibold mb-4">UnitTest Generation</h2>
         <form onSubmit={handleSubmit}>
@@ -119,7 +154,7 @@ const TestCaseGen = ({ paltformname }) => {
               style={{
                 backgroundColor: "#161A30",
                 borderRadius: "10px",
-                minHeight:"200px",
+                minHeight: "200px",
                 fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
               }}
             />
@@ -153,58 +188,58 @@ const TestCaseGen = ({ paltformname }) => {
         </div>
       )}
       {!loading && (
-      <div>
-        <div className='bg-black text-white w-[90%] flex flex-col  justify-center align-middle m-auto my-4 overflow-scroll text-left p-2'>
-          <CodeBlock
-            text={testcode}
-            language={language}
-            showLineNumbers={true}
-            theme={myCustomTheme}
-            startingLineNumber={1}
-            codeBlock={{ wrapLines: true }}
-          />
-          <button className='w-[50%]  m-auto p-2  my-2 bg-gray-700 text-white rounded-md' onClick={handleCopyClick}>Copy to Clipboard</button>
-        </div>
-        <div className="w-[90%] m-auto my-4 p-2 flex flex-col  justify-center align-middle overflow-x-auto">
-          {/* <DownloadTableExcel
+        <div>
+          <div className='bg-black text-white w-[90%] flex flex-col  justify-center align-middle m-auto my-4 overflow-scroll text-left p-2'>
+            <CodeBlock
+              text={testcode}
+              language={language}
+              showLineNumbers={true}
+              theme={myCustomTheme}
+              startingLineNumber={1}
+              codeBlock={{ wrapLines: true }}
+            />
+            <button className='w-[50%]  m-auto p-2  my-2 bg-gray-700 text-white rounded-md' onClick={handleCopyClick}>Copy to Clipboard</button>
+          </div>
+          <div className="w-[90%] m-auto my-4 p-2 flex flex-col  justify-center align-middle overflow-x-auto">
+            {/* <DownloadTableExcel
             filename="testcases"
             sheet="users"
             currentTableRef={tableRef.current}
           >
             <button className="py-2 px-4 bg-orange-600 text-white"> Export excel </button>
           </DownloadTableExcel> */}
-           {body != null && 
-           <CSVLink data={body} style={{
-              backgroundColor: "darkorange",
-              color:"white",
-              width:"200px",
-              padding:"4px 8px 4px 8px",
-              borderRadius: "10px",
-           }}  >
-            Download CSV file
-            </CSVLink>};
-          
-          <table ref={tableRef} className="m-2 bg-amber-100 min-w-full border-collapse border border-gray-300">
-            <thead className="bg-black text-white p-2 ">
-              <tr className="px-4 border-double border-white">
-                {headers != null && headers.map(header => (
-                  <th className='border border-gray-300 px-4 py-2' key={header}>{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="bg-white border-2">
-              {body != null && body.map((row, index) => (
-                <tr key={row[headers[0]]} className={index % 2 === 0 ? 'bg-gray-200' : 'bg-white'}>
-                  {headers.map(header => (
-                    <td className='border border-gray-300 px-4 py-2' key={`${row[headers[0]]}-${header}`}>{row[header]}</td>
+            {body != null &&
+              <CSVLink data={body} style={{
+                backgroundColor: "darkorange",
+                color: "white",
+                width: "200px",
+                padding: "4px 8px 4px 8px",
+                borderRadius: "10px",
+              }}  >
+                Download CSV file
+              </CSVLink>};
+
+            <table ref={tableRef} className="m-2 bg-amber-100 min-w-full border-collapse border border-gray-300">
+              <thead className="bg-black text-white p-2 ">
+                <tr className="px-4 border-double border-white">
+                  {headers != null && headers.map(header => (
+                    <th className='border border-gray-300 px-4 py-2' key={header}>{header}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-white border-2">
+                {body != null && body.map((row, index) => (
+                  <tr key={row[headers[0]]} className={index % 2 === 0 ? 'bg-gray-200' : 'bg-white'}>
+                    {headers.map(header => (
+                      <td className='border border-gray-300 px-4 py-2' key={`${row[headers[0]]}-${header}`}>{row[header]}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
         </div>
-        
-      </div>
       )}
 
     </div>

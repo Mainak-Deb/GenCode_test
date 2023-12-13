@@ -96,8 +96,8 @@ const Home = () => {
           <div className=' w-[95%] h-[95%] functional-area  overflow-y-auto overflow-x-hidden border border-gray-700 rounded-md dark-shadow bg-slate-800 '>
 
             {workfunction === 'Code_Generation' && <CodeGeneration paltformname={selectedPlatform} language={language} />}
-            {workfunction === 'Testcase_Generation' && <TestCaseGen paltformname={selectedPlatform} />}
-            {workfunction === 'Code_Completion' && <CodeCompletion paltformname={selectedPlatform} />}
+            {workfunction === 'Testcase_Generation' && <TestCaseGen paltformname={selectedPlatform}  language={language}  setLanguage={setLanguage}/>}
+            {workfunction === 'Code_Completion' && <CodeCompletion paltformname={selectedPlatform} language={language}/>}
             {workfunction === 'Code_Chat' && <CodeChat paltformname={selectedPlatform} />}
             {workfunction === 'Code_Question' && <CodeQuestion paltformname={selectedPlatform}  language={language}  setLanguage={setLanguage}/>}
             {!(workfunction === 'Testcase_Generation' || workfunction === 'Code_Question' || workfunction === 'Code_Generation' || workfunction === 'Code_Completion' || workfunction === 'Code_Chat') && (

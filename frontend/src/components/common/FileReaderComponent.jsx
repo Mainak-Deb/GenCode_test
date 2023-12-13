@@ -17,17 +17,23 @@ const FileReaderComponent = ({setFileContent,setLanguage}) => {
       };
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        const reader = new FileReader();
+        if(file!=null){
+            const reader = new FileReader();
 
-        reader.onload = (e) => {
-            const content = e.target.result;
-            setFileContent(content);
-        };
+            reader.onload = (e) => {
+                const content = e.target.result;
+                setFileContent(content);
+            };
 
-        reader.readAsText(file);
+            reader.readAsText(file);
 
-        const extension = getFileExtension(file.name);
-        setLanguage(fileExtensions[extension]);
+            const extension = getFileExtension(file.name);
+            setLanguage(fileExtensions[extension]);
+        }else{
+            setFileContent("");
+            setLanguage("python");
+        }
+        
     };
 
     const getFileExtension = (fileName) => {

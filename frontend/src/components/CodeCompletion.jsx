@@ -3,11 +3,11 @@ import axios from 'axios';
 import Markdown from 'react-markdown';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import myCustomTheme from './theme';
+import GlowButton from './common/GlowButton';
 
 
-const CodeCompletion = ({ paltformname }) => {
+const CodeCompletion = ({ paltformname, language }) => {
   const [functionBody, setfunctionBody] = useState('');
-  const [language, setLanguage] = useState('');
   const [loading, setLoading] = useState(false);
   const textareaRef = useRef(null);
 
@@ -19,11 +19,21 @@ const CodeCompletion = ({ paltformname }) => {
       console.log(`Cursor start position: ${cursorStart}`);
       console.log(`Cursor end position: ${cursorEnd}`);
       return {
-        "prefix":functionBody.slice(0,cursorEnd),
-        "suffix":functionBody.slice(cursorEnd,functionBody.length)
+        "prefix": functionBody.slice(0, cursorEnd),
+        "suffix": functionBody.slice(cursorEnd, functionBody.length)
       }
-      
+
     }
+  };
+
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(functionBody)
+      .then(() => {
+        alert('Copied to clipboard!');
+      })
+      .catch((error) => {
+        console.error('Failed to copy:', error);
+      });
   };
 
 
@@ -31,19 +41,19 @@ const CodeCompletion = ({ paltformname }) => {
     e.preventDefault();
 
     try {
-      let cursorbreak=getCursorPosition()
+      let cursorbreak = getCursorPosition()
       setLoading(true)
       console.log(cursorbreak.prefix)
       console.log(cursorbreak.suffix)
       const formData = {
-        prefix:cursorbreak.prefix,
-        suffix:cursorbreak.suffix
+        prefix: cursorbreak.prefix,
+        suffix: cursorbreak.suffix
       };
 
       const response = await axios.post('http://127.0.0.1:8080/codecompletion', formData);
 
       console.log('Response:', response.data);
-      setfunctionBody(cursorbreak.prefix+response.data.content+cursorbreak.suffix)
+      setfunctionBody(cursorbreak.prefix + response.data.content + cursorbreak.suffix)
       setLoading(false);
     } catch (error) {
       console.error('Error:', error);
@@ -53,42 +63,15 @@ const CodeCompletion = ({ paltformname }) => {
 
   return (
     <div>
-      <div className="mb-4">
-        <label htmlFor="language" className="block text-sm font-medium mb-1">
-          Select Language
-        </label>
-        <select
-          id="language"
-          className="w-full border rounded-md p-2"
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-        >
-          <option value="">Select a language</option>
-          <option value="Python">Python</option>
-          <option value="JavaScript">JavaScript</option>
-          <option value="Java">Java</option>
-          <option value="C++">C++</option>
-          <option value="C#">C#</option>
-          <option value="Ruby">Ruby</option>
-          <option value="PHP">PHP</option>
-          <option value="Swift">Swift</option>
-          <option value="Kotlin">Kotlin</option>
-          <option value="TypeScript">TypeScript</option>
-          <option value="Go">Go</option>
-          <option value="Rust">Rust</option>
-          <option value="Perl">Perl</option>
-          <option value="C">C</option>
-          <option value="Assembly">Assembly</option>
-          <option value="Solidity">Solidity</option>
-        </select>
-      </div>
-      <div className="mb-4">
-        <label htmlFor="description" className="block text-sm font-medium mb-1">
-          Write the function for unit test
-        </label>
+      <label htmlFor="description" className="block text-sm font-medium mb-1 my-2 text-white">
+        Write the function for unit test
+      </label>
+      <div className="mb-4 ">
+
         <CodeEditor
           value={functionBody}
           language={language}
+          className="w-[90%] m-auto dark-shadow font-orbitron  border-x-2 border-t-2 border-gray-500 rounded-tr-lg rounded-tl-lg"
           placeholder="Enter your code Here"
           onChange={(evn) => setfunctionBody(evn.target.value)}
           padding={15}
@@ -96,19 +79,26 @@ const CodeCompletion = ({ paltformname }) => {
           ref={textareaRef}
           style={{
             backgroundColor: "#161A30",
-            borderRadius: "10px",
-            minHeight: "200px",
+            minHeight: "300px",
             fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
           }}
+
         />
+        <button
+          type="submit"
+          className="w-[90%] bg-black  dark-shadow  text-white px-4 py-2 border-x-2 border-b-2 border-gray-500 rounded-br-lg rounded-bl-lg hover:bg-gray-900"
+          onClick={handleCopyClick}
+        >
+          Copy To Clipboar
+        </button>
       </div>
-      {!loading && (<button
+      {!loading && (functionBody.length != 0) && (<GlowButton
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
         onClick={handleSubmit}
       >
         Complete
-      </button>)}
+      </GlowButton>)}
       {loading && (<button
         disabled="true"
         className="bg-slate-400 text-white px-4 py-2 rounded-md"
