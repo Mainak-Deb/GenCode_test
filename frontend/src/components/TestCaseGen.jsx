@@ -14,7 +14,7 @@ import CodeSection from './common/CodeSection';
 import FileReaderComponent from './common/FileReaderComponent';
 
 
-const TestCaseGen = ({ paltformname,language,setLanguage }) => {
+const TestCaseGen = ({ platformname, language, setLanguage }) => {
   const [functionBody, setfunctionBody] = useState('');
   const [description, setDescription] = useState('');
   const [testcode, setTestcode] = useState('# *Interra Ai:* code will be shown here!')
@@ -31,7 +31,8 @@ const TestCaseGen = ({ paltformname,language,setLanguage }) => {
       const formData = {
         language,
         functionBody,
-        description
+        description,
+        platformname
       };
       setLoading(true);
       console.log(formData)
@@ -89,6 +90,7 @@ const TestCaseGen = ({ paltformname,language,setLanguage }) => {
             placeholder="Enter your code Here"
             onChange={(evn) => setfunctionBody(evn.target.value)}
             padding={15}
+            className='dark-shadow'
             data-color-mode="dark"
             style={{
               backgroundColor: "#161A30",
@@ -99,151 +101,200 @@ const TestCaseGen = ({ paltformname,language,setLanguage }) => {
           />
         </div>
         <div className="mb-4">
-            <FileReaderComponent setLanguage={setLanguage} setFileContent={setfunctionBody} ></FileReaderComponent>
-          </div>
-      </SciFiDiv>
-    </div>
-  )
-
-
-  return (
-    <div>
-      <div className="w-[90%] mx-auto mt-8 p-6 border rounded-md shadow-md">
-        <h2 className="text-xl font-semibold mb-4">UnitTest Generation</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="language" className="block text-sm font-medium mb-1">
-              Select Language
-            </label>
-            <select
-              id="language"
-              className="w-full border rounded-md p-2"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-            >
-              <option value="">Select a language</option>
-              <option value="Python">Python</option>
-              <option value="JavaScript">JavaScript</option>
-              <option value="Java">Java</option>
-              <option value="C++">C++</option>
-              <option value="C#">C#</option>
-              <option value="Ruby">Ruby</option>
-              <option value="PHP">PHP</option>
-              <option value="Swift">Swift</option>
-              <option value="Kotlin">Kotlin</option>
-              <option value="TypeScript">TypeScript</option>
-              <option value="Go">Go</option>
-              <option value="Rust">Rust</option>
-              <option value="Perl">Perl</option>
-              <option value="C">C</option>
-              <option value="Assembly">Assembly</option>
-              <option value="Solidity">Solidity</option>
-            </select>
-          </div>
-          <div className="mb-4">
-            <label htmlFor="description" className="block text-sm font-medium mb-1">
-              Write the function for unit test
-            </label>
-            <CodeEditor
-              value={functionBody}
-              language={language}
-              placeholder="Enter your code Here"
-              onChange={(evn) => setfunctionBody(evn.target.value)}
-              padding={15}
-              data-color-mode="dark"
-              style={{
-                backgroundColor: "#161A30",
-                borderRadius: "10px",
-                minHeight: "200px",
-                fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-              }}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="description" className=" block text-sm font-medium mb-1">
-              Description
-            </label>
-            <textarea
-              id="description"
-              className="w-full border rounded-md p-2"
-              rows="2"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-          >
-            Submit
-          </button>
-        </form>
-
-      </div>
-      {loading && (
-        <div className="flex justify-center items-center h-[200px]">
-          {/* Loader or spinner component */}
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+          <FileReaderComponent setLanguage={setLanguage} setFileContent={setfunctionBody} ></FileReaderComponent>
         </div>
+        <hr className='dark-shadow bg-black text-black' />
+        <div className="mb-4">
+          <label htmlFor="description" className="block text-sm font-medium my-2  font-orbitron text-white">
+            Description
+          </label>
+          <CustomTextAreaField
+            id="description"
+            className="w-full border rounded-md p-2 dark-shadow"
+            rows="4"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></CustomTextAreaField>
+        </div>
+        {!loading  && <GlowButton  onClick={handleSubmit}>Generate</GlowButton>}
+      </SciFiDiv>
+      {loading && (
+        <div class="flex justify-center items-center h-[400px] w-[90%] m-auto">
+        <div class="rounded-full h-20 w-20 bg-white animate-ping"></div>
+      </div>
       )}
-      {!loading && (
-        <div>
-          <div className='bg-black text-white w-[90%] flex flex-col  justify-center align-middle m-auto my-4 overflow-scroll text-left p-2'>
-            <CodeBlock
-              text={testcode}
-              language={language}
-              showLineNumbers={true}
-              theme={myCustomTheme}
-              startingLineNumber={1}
-              codeBlock={{ wrapLines: true }}
-            />
-            <button className='w-[50%]  m-auto p-2  my-2 bg-gray-700 text-white rounded-md' onClick={handleCopyClick}>Copy to Clipboard</button>
-          </div>
-          <div className="w-[90%] m-auto my-4 p-2 flex flex-col  justify-center align-middle overflow-x-auto">
-            {/* <DownloadTableExcel
-            filename="testcases"
-            sheet="users"
-            currentTableRef={tableRef.current}
-          >
-            <button className="py-2 px-4 bg-orange-600 text-white"> Export excel </button>
-          </DownloadTableExcel> */}
-            {body != null &&
-              <CSVLink data={body} style={{
-                backgroundColor: "darkorange",
-                color: "white",
-                width: "200px",
-                padding: "4px 8px 4px 8px",
-                borderRadius: "10px",
-              }}  >
-                Download CSV file
-              </CSVLink>};
+      {!loading && (<div className='output-div glassmorph w-[90%] mx-auto mt-8 p-6 border rounded-md shadow-md my-4 dark-shadow'>
+        <CodeSection content={testcode} language={language} handleCopyClick={handleCopyClick}  ></CodeSection>
+        <div className="w-[90%] m-auto my-4 p-2 flex flex-col  justify-center align-middle overflow-x-auto">
+          {body != null &&
+            <CSVLink data={body} 
+            className='shiny-button className'
+            >
+              Download As CSV file
+            </CSVLink>}
 
-            <table ref={tableRef} className="m-2 bg-amber-100 min-w-full border-collapse border border-gray-300">
-              <thead className="bg-black text-white p-2 ">
-                <tr className="px-4 border-double border-white">
-                  {headers != null && headers.map(header => (
-                    <th className='border border-gray-300 px-4 py-2' key={header}>{header}</th>
+            {body != null && <table ref={tableRef} className="dark-shadow my-2 bg-amber-100 min-w-full border-collapse border border-gray-300">
+            <thead className="bg-black text-white p-2 ">
+              <tr className="px-4 border-double border-white">
+                {headers != null && headers.map(header => (
+                  <th className='border border-gray-300 px-4 py-2' key={header}>{header}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="bg-white border-2">
+              {body != null && body.map((row, index) => (
+                <tr key={row[headers[0]]} className={index % 2 === 0 ? 'bg-gray-200' : 'bg-white'}>
+                  {headers.map(header => (
+                    <td className='border border-gray-300 px-4 py-2' key={`${row[headers[0]]}-${header}`}>{row[header]}</td>
                   ))}
                 </tr>
-              </thead>
-              <tbody className="bg-white border-2">
-                {body != null && body.map((row, index) => (
-                  <tr key={row[headers[0]]} className={index % 2 === 0 ? 'bg-gray-200' : 'bg-white'}>
-                    {headers.map(header => (
-                      <td className='border border-gray-300 px-4 py-2' key={`${row[headers[0]]}-${header}`}>{row[header]}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
+              ))}
+            </tbody>
+          </table>}
         </div>
-      )}
-
+      </div>)}
     </div>
   )
+
+
+  // return (
+  //   <div>
+  //     <div className="w-[90%] mx-auto mt-8 p-6 border rounded-md shadow-md">
+  //       <h2 className="text-xl font-semibold mb-4">UnitTest Generation</h2>
+  //       <form onSubmit={handleSubmit}>
+  //         <div className="mb-4">
+  //           <label htmlFor="language" className="block text-sm font-medium mb-1">
+  //             Select Language
+  //           </label>
+  //           <select
+  //             id="language"
+  //             className="w-full border rounded-md p-2"
+  //             value={language}
+  //             onChange={(e) => setLanguage(e.target.value)}
+  //           >
+  //             <option value="">Select a language</option>
+  //             <option value="Python">Python</option>
+  //             <option value="JavaScript">JavaScript</option>
+  //             <option value="Java">Java</option>
+  //             <option value="C++">C++</option>
+  //             <option value="C#">C#</option>
+  //             <option value="Ruby">Ruby</option>
+  //             <option value="PHP">PHP</option>
+  //             <option value="Swift">Swift</option>
+  //             <option value="Kotlin">Kotlin</option>
+  //             <option value="TypeScript">TypeScript</option>
+  //             <option value="Go">Go</option>
+  //             <option value="Rust">Rust</option>
+  //             <option value="Perl">Perl</option>
+  //             <option value="C">C</option>
+  //             <option value="Assembly">Assembly</option>
+  //             <option value="Solidity">Solidity</option>
+  //           </select>
+  //         </div>
+  //         <div className="mb-4">
+  //           <label htmlFor="description" className="block text-sm font-medium mb-1">
+  //             Write the function for unit test
+  //           </label>
+  //           <CodeEditor
+  //             value={functionBody}
+  //             language={language}
+  //             placeholder="Enter your code Here"
+  //             onChange={(evn) => setfunctionBody(evn.target.value)}
+  //             padding={15}
+  //             data-color-mode="dark"
+  //             style={{
+  //               backgroundColor: "#161A30",
+  //               borderRadius: "10px",
+  //               minHeight: "200px",
+  //               fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+  //             }}
+  //           />
+  //         </div>
+
+  //         <div className="mb-4">
+  //           <label htmlFor="description" className=" block text-sm font-medium mb-1">
+  //             Description
+  //           </label>
+  //           <textarea
+  //             id="description"
+  //             className="w-full border rounded-md p-2"
+  //             rows="2"
+  //             value={description}
+  //             onChange={(e) => setDescription(e.target.value)}
+  //           ></textarea>
+  //         </div>
+  //         <button
+  //           type="submit"
+  //           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+  //         >
+  //           Submit
+  //         </button>
+  //       </form>
+
+  //     </div>
+  //     {loading && (
+  //       <div className="flex justify-center items-center h-[200px]">
+  //         {/* Loader or spinner component */}
+  //         <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+  //       </div>
+  //     )}
+  //     {!loading && (
+  //       <div >
+  //         <div className='bg-black  text-white w-[90%] flex flex-col  justify-center align-middle m-auto my-4 overflow-scroll text-left p-2'>
+  //           <CodeBlock
+  //             text={testcode}
+  //             language={language}
+  //             showLineNumbers={true}
+  //             theme={myCustomTheme}
+  //             startingLineNumber={1}
+  //             codeBlock={{ wrapLines: true }}
+  //           />
+  //           <button className='w-[50%]  m-auto p-2  my-2 bg-gray-700 text-white rounded-md' onClick={handleCopyClick}>Copy to Clipboard</button>
+  //         </div>
+  //         <div className="w-[90%] m-auto my-4 p-2 flex flex-col  justify-center align-middle overflow-x-auto">
+  //           {/* <DownloadTableExcel
+  //           filename="testcases"
+  //           sheet="users"
+  //           currentTableRef={tableRef.current}
+  //         >
+  //           <button className="py-2 px-4 bg-orange-600 text-white"> Export excel </button>
+  //         </DownloadTableExcel> */}
+  //           {body != null &&
+  //             <CSVLink data={body} style={{
+  //               backgroundColor: "darkorange",
+  //               color: "white",
+  //               width: "200px",
+  //               padding: "4px 8px 4px 8px",
+  //               borderRadius: "10px",
+  //             }}  >
+  //               Download CSV file
+  //             </CSVLink>};
+
+  //           <table ref={tableRef} className="m-2 bg-amber-100 min-w-full border-collapse border border-gray-300">
+  //             <thead className="bg-black text-white p-2 ">
+  //               <tr className="px-4 border-double border-white">
+  //                 {headers != null && headers.map(header => (
+  //                   <th className='border border-gray-300 px-4 py-2' key={header}>{header}</th>
+  //                 ))}
+  //               </tr>
+  //             </thead>
+  //             <tbody className="bg-white border-2">
+  //               {body != null && body.map((row, index) => (
+  //                 <tr key={row[headers[0]]} className={index % 2 === 0 ? 'bg-gray-200' : 'bg-white'}>
+  //                   {headers.map(header => (
+  //                     <td className='border border-gray-300 px-4 py-2' key={`${row[headers[0]]}-${header}`}>{row[header]}</td>
+  //                   ))}
+  //                 </tr>
+  //               ))}
+  //             </tbody>
+  //           </table>
+  //         </div>
+
+  //       </div>
+  //     )}
+
+  //   </div>
+  // )
 }
 
 export default TestCaseGen

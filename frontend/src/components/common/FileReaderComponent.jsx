@@ -13,7 +13,7 @@ const FileReaderComponent = ({setFileContent,setLanguage}) => {
         'php': 'PHP',
         'rb': 'Ruby',
         'swift': 'Swift',
-        'go': 'Go',
+        'go': 'Go'
       };
     const handleFileChange = (event) => {
         const file = event.target.files[0];

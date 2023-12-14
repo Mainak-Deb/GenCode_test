@@ -6,7 +6,7 @@ import myCustomTheme from './theme';
 import GlowButton from './common/GlowButton';
 
 
-const CodeCompletion = ({ paltformname, language }) => {
+const CodeCompletion = ({ platformname, language }) => {
   const [functionBody, setfunctionBody] = useState('');
   const [loading, setLoading] = useState(false);
   const textareaRef = useRef(null);
@@ -47,13 +47,19 @@ const CodeCompletion = ({ paltformname, language }) => {
       console.log(cursorbreak.suffix)
       const formData = {
         prefix: cursorbreak.prefix,
-        suffix: cursorbreak.suffix
+        suffix: cursorbreak.suffix,
+        platformname:platformname
       };
 
       const response = await axios.post('http://127.0.0.1:8080/codecompletion', formData);
 
       console.log('Response:', response.data);
-      setfunctionBody(cursorbreak.prefix + response.data.content + cursorbreak.suffix)
+      if(platformname=="Google"){
+        setfunctionBody(cursorbreak.prefix + response.data.content + cursorbreak.suffix)
+      }else if(platformname=="OpenAi"){
+        setfunctionBody(response.data.content)
+      }
+      
       setLoading(false);
     } catch (error) {
       console.error('Error:', error);

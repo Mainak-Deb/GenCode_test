@@ -1,8 +1,8 @@
 import React from 'react'
 
-const CodeChat = ({paltformname}) => {
+const CodeChat = ({platformname}) => {
   return (
-    <div>CodeChat {paltformname}</div>
+    <div>CodeChat {platformname}</div>
   )
 }
 

@@ -11,7 +11,7 @@ import MarkdownPreview from '@uiw/react-markdown-preview';
 
 
 
-const CodeQuestion = ({ paltformname, language, setLanguage }) => {
+const CodeQuestion = ({ platformname, language, setLanguage }) => {
   const [code, setCode] = useState('');
   const [query, setQuery] = useState('');
   const [content, setContent] = useState('# *Interra Ai:* code will be shown here!')
@@ -25,6 +25,7 @@ const CodeQuestion = ({ paltformname, language, setLanguage }) => {
       const formData = {
         code,
         query,
+        platformname
       };
       setLoading(true)
       const response = await axios.post('http://127.0.0.1:8080/codequery', formData, {

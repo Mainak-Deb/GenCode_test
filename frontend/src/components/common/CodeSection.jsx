@@ -5,9 +5,9 @@ import RainbowButton from './RainbowButton';
 
 
 
-const CodeSection = ({content,language,handleCopyClick}) => {
+const CodeSection = ({content,language,handleCopyClick,className}) => {
     return (
-        <div className="w-[90%] dark-gradient  m-auto my-4 p-2 text-left flex flex-col justify-center ">
+        <div className="w-[90%] dark-gradient dark-shadow m-auto my-4 p-2 text-left flex flex-col justify-center ">
             <CodeBlock
                 text={content}
                 language={language}

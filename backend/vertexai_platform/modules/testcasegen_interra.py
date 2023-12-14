@@ -16,7 +16,7 @@ def generate_table(credentials,functionbody:str,description:str):
     one row will contain serial number, 
     another rows will contain input field of the function 
     and other rows will contain expected output,
-    in excel sheet table format with as max as row you can generate"""
+    in excel sheet table format """
     
     if(len(description.strip())!=0):
         prompt=prompt+"\nConsider following points: {description}"

@@ -12,7 +12,7 @@ import CodeSection from './common/CodeSection';
 
 
 
-const CodeGeneration = ({paltformname,language}) => {
+const CodeGeneration = ({platformname,language}) => {
   const [functionName, setFunctionName] = useState('');
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('# *Interra Ai:* code will be shown here!')
@@ -26,7 +26,7 @@ const CodeGeneration = ({paltformname,language}) => {
         language,
         functionName,
         description,
-        paltformname
+        platformname
       };
       setLoading(true);
       console.log(formData)

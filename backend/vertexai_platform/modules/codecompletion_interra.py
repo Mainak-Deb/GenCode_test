@@ -1,9 +1,10 @@
+import vertexai
 from vertexai.language_models import CodeGenerationModel
 
 
-def complete_code_function(prefix,suffix) -> object:
+def complete_code_function(credentials,prefix,suffix) -> object:
     """Example of using Codey for Code Completion to complete a function."""
-
+    vertexai.init(project="vertex-ai-learn-406510", location="us-central1",credentials=credentials)
     # TODO developer - override these parameters as needed:
     parameters = {
         "temperature": 0.2,  # Temperature controls the degree of randomness in token selection.
