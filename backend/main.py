@@ -160,5 +160,31 @@ def code_completion():
 
 
 
+@app.route('/codechat', methods=['POST'])
+def codechat():
+    if request.method == 'POST':
+        # Get POST parameters from the request
+        data = request.get_json()
+        history=data['history']
+        messege=data['messege']
+        platformname=data['platformname']
+
+        print(data)
+
+        if(platformname=="Google"):
+            content=vertexai_platform.chat_with_code(GCLOUD_SERVICE_CREDENTIAL,history=history, messege=messege)        
+            return jsonify({
+                "status":200,
+                "content":content
+            })
+        elif(platformname=="OpenAi"):
+            content="openai_platform.query_code(OPENAI_CLIENT,code,query)"
+            return jsonify({
+                "status":200,
+                "content":content
+            })
+
+
+
 if __name__ == '__main__':
     app.run(port=8080,debug=True)

@@ -11,6 +11,9 @@ const CustomTextAreaField = (props) => {
                     className="bg-black text-green-100 p-4  text-lg"
                     value={props.value}
                     onChange={props.onChange}
+                    style={{
+                        resize:"none"
+                    }}
                 />
                 <span></span>
             </span>
