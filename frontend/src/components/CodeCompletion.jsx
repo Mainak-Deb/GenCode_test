@@ -70,7 +70,7 @@ const CodeCompletion = ({ platformname, language }) => {
   return (
     <div>
       <label htmlFor="description" className="block text-sm font-medium mb-1 my-2 text-white">
-        Write the function for unit test
+        Provide your incomplete code here
       </label>
       <div className="mb-4 ">
 
@@ -88,14 +88,14 @@ const CodeCompletion = ({ platformname, language }) => {
             minHeight: "300px",
             fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
           }}
-
         />
+        
         <button
           type="submit"
           className="w-[90%] bg-black  dark-shadow  text-white px-4 py-2 border-x-2 border-b-2 border-gray-500 rounded-br-lg rounded-bl-lg hover:bg-gray-900"
           onClick={handleCopyClick}
         >
-          Copy To Clipboar
+          Copy To Clipboard
         </button>
       </div>
       {!loading && (functionBody.length != 0) && (<GlowButton
