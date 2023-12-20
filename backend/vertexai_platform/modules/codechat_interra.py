@@ -9,6 +9,10 @@ def chat_with_code(credentials,history,messege):
         "max_output_tokens": 2048,
         "temperature": 0.4
     }
+    
+    # chat = chat_model.start_chat(message_history=history)
     chat = chat_model.start_chat(message_history=history)
+    print(messege)
     response = chat.send_message(messege, **parameters)
+    print("Response is: ",response.text)
     return response.text

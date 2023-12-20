@@ -8,7 +8,7 @@ from flask_cors import CORS
 import vertexai_platform 
 import openai_platform
 from openai import OpenAI
-
+import json
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,6 +16,20 @@ load_dotenv()
 #initializing flask app
 app = Flask(__name__)
 CORS(app)
+
+
+class CustomObjectForGoogle:
+    def __init__(self, dictionary):
+        for key, value in dictionary.items():
+            setattr(self, key, value)
+
+
+def CustomObjectForOpenAi(dictionary):
+    d=dict()
+    d["role"]=dictionary["author"]
+    d["content"]=dictionary["content"]
+    return d
+
 
 
 #loading credentials
@@ -168,17 +182,23 @@ def codechat():
         history=data['history']
         messege=data['messege']
         platformname=data['platformname']
-
-        print(data)
+        print(platformname)
 
         if(platformname=="Google"):
-            content=vertexai_platform.chat_with_code(GCLOUD_SERVICE_CREDENTIAL,history=history, messege=messege)        
+            history_array=[]
+            for i in history:
+                history_array.append(CustomObjectForGoogle(i))
+            content=vertexai_platform.chat_with_code(GCLOUD_SERVICE_CREDENTIAL,history=history_array, messege=messege)        
             return jsonify({
                 "status":200,
                 "content":content
             })
-        elif(platformname=="OpenAi"):
-            content="openai_platform.query_code(OPENAI_CLIENT,code,query)"
+
+        if(platformname=="OpenAi"):
+            history_array=[]
+            for i in history:
+                history_array.append(CustomObjectForOpenAi(i))
+            content=openai_platform.chat_with_code(OPENAI_CLIENT,history=history_array, messege=messege)        
             return jsonify({
                 "status":200,
                 "content":content
