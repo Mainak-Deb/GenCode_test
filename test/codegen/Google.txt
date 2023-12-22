@@ -1,0 +1,8 @@
+case 1:
+    isPrime
+
+
+case 2:
+    codist
+    generate a function which will take coordinates 
+    as input and return the distance between them

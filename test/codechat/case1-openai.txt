@@ -1,0 +1,7 @@
+def add_numbers(a, b):
+    result = a * b  # Multiplying instead of adding
+    return result
+
+# Trying to add 3 and 5
+sum_result = add_numbers(3, 5)
+print("The sum is:", sum_result)

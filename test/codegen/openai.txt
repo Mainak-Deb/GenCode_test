@@ -1,0 +1,3 @@
+case 2:
+    Dollar to ruppes
+    Concider one dollar is 83.25 indian rupees

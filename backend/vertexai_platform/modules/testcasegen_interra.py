@@ -65,10 +65,10 @@ def parse_input(input_text):
     print(input_text)
     lines = input_text.strip().split('\n')
     #reconstructing header
-    header = lines[0].strip()[1:-1].split('|')
+    header = lines[0].strip().split('|')
     header=[i.strip() for i in header]
     #reconstructing body
-    data = [line.strip()[1:-1].split('|') for line in lines[2:]]
+    data = [line.strip().split('|') for line in lines[2:]]
     #init body
     body=[]
     for i in range(len(data)):
